@@ -8,12 +8,10 @@ from util import get_med_list, get_tag_list
 from report import get_report 
 
 #https://www.linkedin.com/pulse/add-external-python-libraries-aws-lambda-using-layers-gabe-olokun/
-print('Loading function')
-DB_URL = (os.environ['instance']).replace("<password>", os.environ['key'])
-print(DB_URL)
+DB_URL = (os.environ['instance']).replace("<password>", os.environ['key']).replace("<user>", os.environ['user'])
+# DB_URL = DB_URL.replace("<user>", os.environ['user'])
 client = pymongo.MongoClient(DB_URL)
-print(client)
-db = client.suhrit
+db = client[os.environ['DB_NAME']]
 
 def lambda_handler(event, context):
 
@@ -51,14 +49,14 @@ def lambda_handler(event, context):
         "/visit/update": update_visit,
         "/visit/process": process_visit,
         "/visit/queue": get_queue,
-        "/report/default": get_report,
+        "/report/range": get_report,
         "/util/medlist": get_med_list,
         "/util/taglist": get_tag_list
     }
     
-    path = event.get('path')
-    path = path.replace("/default/drdigi","")
-    print("Received Path:", path)
+    path = event.get("path") or event.get("rawPath") or event.get("requestContext", {}).get("http", {}).get("path")
+    path = path.replace("/default","")
+
     # Retrieve the function from the dictionary
     func = path_dict.get(path)
 
@@ -69,7 +67,7 @@ def lambda_handler(event, context):
             or path == "/patient/edit"
             or path == "/patient/register"
             or path == "/patient/lastvisit"
-            or path == "/report/default" 
+            or path == "/report/range" 
             or path == "/visit/add" 
             or path == "/visit/update"
             or path == "/visit/process"
