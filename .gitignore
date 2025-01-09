@@ -3,5 +3,3 @@ dns
 dnspython*
 gridfs
 pymongo*
-
-*.zip

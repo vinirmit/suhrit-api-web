@@ -1,0 +1,235 @@
+openapi: "3.0.1"
+info:
+  title: "suhrit-apig-dev"
+  description: "Created by AWS Lambda"
+  version: "2025-01-08 18:31:32UTC"
+
+paths:
+  /util/medlist:
+    get:
+      responses:
+        default:
+          description: "Default response for GET /util/medlist"
+      security:
+      - suhrit-dev: []
+      x-amazon-apigateway-integration:
+        payloadFormatVersion: "2.0"
+        type: "aws_proxy"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-south-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-south-1:476139603980:function:suhrit-api-web-dev/invocations"
+        connectionType: "INTERNET"
+    options:
+      responses:
+        default:
+          description: "Default response for OPTIONS /util/medlist"
+  /util/taglist:
+    get:
+      responses:
+        default:
+          description: "Default response for GET /util/taglist"
+      security:
+      - suhrit-dev: []
+      x-amazon-apigateway-integration:
+        payloadFormatVersion: "2.0"
+        type: "aws_proxy"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-south-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-south-1:476139603980:function:suhrit-api-web-dev/invocations"
+        connectionType: "INTERNET"
+    options:
+      responses:
+        default:
+          description: "Default response for OPTIONS /util/taglist"
+  /visit/queue:
+    get:
+      responses:
+        default:
+          description: "Default response for GET /visit/queue"
+      security:
+      - suhrit-dev: []
+      x-amazon-apigateway-integration:
+        payloadFormatVersion: "2.0"
+        type: "aws_proxy"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-south-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-south-1:476139603980:function:suhrit-api-web-dev/invocations"
+        connectionType: "INTERNET"
+    options:
+      responses:
+        default:
+          description: "Default response for OPTIONS /visit/queue"
+  /patient/edit:
+    post:
+      responses:
+        default:
+          description: "Default response for POST /patient/edit"
+      security:
+      - suhrit-dev: []
+    options:
+      responses:
+        default:
+          description: "Default response for OPTIONS /patient/edit"
+      x-amazon-apigateway-integration:
+        payloadFormatVersion: "2.0"
+        type: "aws_proxy"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-south-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-south-1:476139603980:function:suhrit-api-web-dev/invocations"
+        connectionType: "INTERNET"
+  /patient/history:
+    post:
+      responses:
+        default:
+          description: "Default response for POST /patient/history"
+      security:
+      - suhrit-dev: []
+      x-amazon-apigateway-integration:
+        payloadFormatVersion: "2.0"
+        type: "aws_proxy"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-south-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-south-1:476139603980:function:suhrit-api-web-dev/invocations"
+        connectionType: "INTERNET"
+    options:
+      responses:
+        default:
+          description: "Default response for OPTIONS /patient/history"
+  /patient/lastvisit:
+    post:
+      responses:
+        default:
+          description: "Default response for POST /patient/lastvisit"
+      security:
+      - suhrit-dev: []
+      x-amazon-apigateway-integration:
+        payloadFormatVersion: "2.0"
+        type: "aws_proxy"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-south-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-south-1:476139603980:function:suhrit-api-web-dev/invocations"
+        connectionType: "INTERNET"
+    options:
+      responses:
+        default:
+          description: "Default response for OPTIONS /patient/lastvisit"
+  /patient/register:
+    post:
+      responses:
+        default:
+          description: "Default response for POST /patient/register"
+      security:
+      - suhrit-dev: []
+      x-amazon-apigateway-integration:
+        payloadFormatVersion: "2.0"
+        type: "aws_proxy"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-south-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-south-1:476139603980:function:suhrit-api-web-dev/invocations"
+        connectionType: "INTERNET"
+    options:
+      responses:
+        default:
+          description: "Default response for OPTIONS /patient/register"
+  /patient/search:
+    post:
+      responses:
+        default:
+          description: "Default response for POST /patient/search"
+      security:
+      - suhrit-dev: []
+      x-amazon-apigateway-integration:
+        payloadFormatVersion: "2.0"
+        type: "aws_proxy"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-south-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-south-1:476139603980:function:suhrit-api-web-dev/invocations"
+        connectionType: "INTERNET"
+    options:
+      responses:
+        default:
+          description: "Default response for OPTIONS /patient/search"
+  /report/range:
+    post:
+      responses:
+        default:
+          description: "Default response for POST /report/range"
+      security:
+      - suhrit-dev: []
+      x-amazon-apigateway-integration:
+        payloadFormatVersion: "2.0"
+        type: "aws_proxy"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-south-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-south-1:476139603980:function:suhrit-api-web-dev/invocations"
+        connectionType: "INTERNET"
+    options:
+      responses:
+        default:
+          description: "Default response for OPTIONS /report/range"
+  /visit/add:
+    post:
+      responses:
+        default:
+          description: "Default response for POST /visit/add"
+      security:
+      - suhrit-dev: []
+      x-amazon-apigateway-integration:
+        payloadFormatVersion: "2.0"
+        type: "aws_proxy"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-south-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-south-1:476139603980:function:suhrit-api-web-dev/invocations"
+        connectionType: "INTERNET"
+    options:
+      responses:
+        default:
+          description: "Default response for OPTIONS /visit/add"
+  /visit/process:
+    post:
+      responses:
+        default:
+          description: "Default response for POST /visit/process"
+      security:
+      - suhrit-dev: []
+      x-amazon-apigateway-integration:
+        payloadFormatVersion: "2.0"
+        type: "aws_proxy"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-south-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-south-1:476139603980:function:suhrit-api-web-dev/invocations"
+        connectionType: "INTERNET"
+    options:
+      responses:
+        default:
+          description: "Default response for OPTIONS /visit/process"
+  /visit/update:
+    post:
+      responses:
+        default:
+          description: "Default response for POST /visit/update"
+      security:
+      - suhrit-dev: []
+      x-amazon-apigateway-integration:
+        payloadFormatVersion: "2.0"
+        type: "aws_proxy"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-south-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-south-1:476139603980:function:suhrit-api-web-dev/invocations"
+        connectionType: "INTERNET"
+    options:
+      responses:
+        default:
+          description: "Default response for OPTIONS /visit/update"
+components:
+  securitySchemes:
+    suhrit-dev:
+      type: "oauth2"
+      flows: {}
+      x-amazon-apigateway-authorizer:
+        identitySource: "$request.header.Authorization"
+        jwtConfiguration:
+          audience:
+          - "15mhivicmdt8np410l0asesvra"
+          issuer: "https://cognito-idp.ap-south-1.amazonaws.com/ap-south-1_BnpmbJxGj"
+        type: "jwt"
+x-amazon-apigateway-cors:
+  allowMethods:
+  - "GET"
+  - "OPTIONS"
+  - "POST"
+  allowHeaders:
+  - "*"
+  maxAge: 0
+  allowCredentials: false
+  allowOrigins:
+  - "*"
+x-amazon-apigateway-importexport-version: "1.0"
