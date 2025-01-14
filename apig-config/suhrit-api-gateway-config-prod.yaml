@@ -1,0 +1,154 @@
+openapi: "3.0.1"
+info:
+  title: "suhrit-apig-prod"
+  description: "Production API Gateway"
+  version: "2025-01-12 13:52:00UTC"
+paths:
+  /user/details:
+    get:
+      responses:
+        default:
+          description: "Default response for GET /user/details"
+      security:
+      - suhrit-qa: []
+    options:
+      responses:
+        default:
+          description: "Default response for OPTIONS /user/details"
+  /util/medlist:
+    get:
+      responses:
+        default:
+          description: "Default response for GET /util/medlist"
+      security:
+      - suhrit-qa: []
+    options:
+      responses:
+        default:
+          description: "Default response for OPTIONS /util/medlist"
+  /util/taglist:
+    get:
+      responses:
+        default:
+          description: "Default response for GET /util/taglist"
+      security:
+      - suhrit-qa: []
+    options:
+      responses:
+        default:
+          description: "Default response for OPTIONS /util/taglist"
+  /visit/queue:
+    get:
+      responses:
+        default:
+          description: "Default response for GET /visit/queue"
+      security:
+      - suhrit-qa: []
+    options:
+      responses:
+        default:
+          description: "Default response for OPTIONS /visit/queue"
+  /patient/edit:
+    post:
+      responses:
+        default:
+          description: "Default response for POST /patient/edit"
+      security:
+      - suhrit-qa: []
+    options:
+      responses:
+        default:
+          description: "Default response for OPTIONS /patient/edit"
+  /patient/history:
+    post:
+      responses:
+        default:
+          description: "Default response for POST /patient/history"
+      security:
+      - suhrit-qa: []
+    options:
+      responses:
+        default:
+          description: "Default response for OPTIONS /patient/history"
+  /patient/lastvisit:
+    post:
+      responses:
+        default:
+          description: "Default response for POST /patient/lastvisit"
+      security:
+      - suhrit-qa: []
+    options:
+      responses:
+        default:
+          description: "Default response for OPTIONS /patient/lastvisit"
+  /patient/register:
+    post:
+      responses:
+        default:
+          description: "Default response for POST /patient/register"
+      security:
+      - suhrit-qa: []
+    options:
+      responses:
+        default:
+          description: "Default response for OPTIONS /patient/register"
+  /patient/search:
+    post:
+      responses:
+        default:
+          description: "Default response for POST /patient/search"
+      security:
+      - suhrit-qa: []
+    options:
+      responses:
+        default:
+          description: "Default response for OPTIONS /patient/search"
+  /report/range:
+    post:
+      responses:
+        default:
+          description: "Default response for POST /report/range"
+      security:
+      - suhrit-qa: []
+    options:
+      responses:
+        default:
+          description: "Default response for OPTIONS /report/range"
+  /visit/add:
+    post:
+      responses:
+        default:
+          description: "Default response for POST /visit/add"
+      security:
+      - suhrit-qa: []
+    options:
+      responses:
+        default:
+          description: "Default response for OPTIONS /visit/add"
+  /visit/process:
+    post:
+      responses:
+        default:
+          description: "Default response for POST /visit/process"
+      security:
+      - suhrit-qa: []
+    options:
+      responses:
+        default:
+          description: "Default response for OPTIONS /visit/process"
+  /visit/update:
+    post:
+      responses:
+        default:
+          description: "Default response for POST /visit/update"
+      security:
+      - suhrit-qa: []
+    options:
+      responses:
+        default:
+          description: "Default response for OPTIONS /visit/update"
+components:
+  securitySchemes:
+    suhrit-qa:
+      type: "oauth2"
+      flows: {}

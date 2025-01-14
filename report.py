@@ -10,6 +10,7 @@ def get_report(db, body):
     pipeline = [{
         '$project': {
             '_id': 0,
+            'patientId': 1,  # Include patientId in the projection
             'matchedVisits': {
                 '$filter': {
                     'input': "$visits",
@@ -40,7 +41,19 @@ def get_report(db, body):
             'totalOpdPayments': {'$sum': "$matchedVisits.opdPayment"},
             'totalKarmaPayments': {'$sum': "$matchedKVisits.payment"},
             'totalVisits': {'$size': "$matchedVisits"},
-            'totalKVisits': {'$size': "$matchedKVisits"}
+            'totalKVisits': {'$size': "$matchedKVisits"},
+            'kvisitsList': {
+                '$map': {
+                    'input': "$matchedKVisits",
+                    'as': "kvisit",
+                    'in': {
+                        'patientId': "$patientId",  # Include patientId from the root document
+                        'visitDate': "$$kvisit.visitDate",
+                        'payment': "$$kvisit.payment",
+                        'karms': "$$kvisit.karms"
+                    }
+                }
+            }  # Include the list of matchedKVisits with patientId
         }
     }]
 
@@ -48,7 +61,8 @@ def get_report(db, body):
         "totalOpdPayments": 0,
         "totalKarmaPayments": 0,
         "totalVisits": 0,
-        "totalKVisits": 0
+        "totalKVisits": 0,
+        "kvisitsList": []  # Initialize the list of kvisits
     }
     
     for entry in list(collection.aggregate(pipeline)):
@@ -56,78 +70,25 @@ def get_report(db, body):
         total_sums["totalKarmaPayments"] += entry["totalKarmaPayments"]
         total_sums["totalVisits"] += entry["totalVisits"]
         total_sums["totalKVisits"] += entry["totalKVisits"]
-        
-    return { "success": True, "payload": total_sums}
+        if start_date == end_date:
+            total_sums["kvisitsList"].extend(entry["kvisitsList"])
+
+    if start_date == end_date: 
+        for item in total_sums["kvisitsList"]:
+            patient_id = item['patientId']
+            patient_details = db['patients'].find_one(
+                    {'patientId': patient_id}, 
+                    {'_id': 0, 'firstName': 1, 'lastName': 1})
+            item['firstName'] = patient_details.get('firstName')
+            item['lastName'] = patient_details.get('lastName')
+            item['visitDate'] = item['visitDate'].strftime('%Y-%m-%d')
+
+    print(total_sums)
+    result = { "success": True, "payload": total_sums }
+    
+    return result
 
 def parse_dates(start_date_str, end_date_str):
     start_date = datetime.strptime(start_date_str, "%Y-%m-%d")
     end_date = datetime.strptime(end_date_str, "%Y-%m-%d")
     return start_date, end_date
-
-
-
-
-# pipeline = [
-#         # Step 1: Perform a lookup on patients using the 'patientId' field
-#         {
-#             "$lookup": {
-#                 "from": "patients",  # Name of the collection to join
-#                 "localField": "patientId",  # Field from collectionA to match
-#                 "foreignField": "patientId",  # Field from collectionB to match
-#                 "as": "joinedData"  # Output array field from the lookup
-#             }
-#         },
-#         # Step 2: Project only the necessary fields and filter the arrays by date range
-#         {
-#             "$project": {
-#                 "_id": 0,  # Exclude _id if not needed
-#                 "patientId": 1,
-#                 "joinedData": 1,
-#                 # Filter and map over visits to include the id in each item
-#                 "visits": {
-#                     "$map": {
-#                         "input": {
-#                             "$filter": {
-#                                 "input": "$visits",
-#                                 "as": "item",
-#                                 "cond": {
-#                                     "$and": [
-#                                         # Start date
-#                                         {"$gte": ["$$item.visitDate", start_date]},
-#                                         # End date
-#                                         {"$lte": ["$$item.visitDate", end_date]}
-#                                     ]
-#                                 }
-#                             }
-#                         },
-#                         "as": "filteredItem",
-#                         # Merge id into each item
-#                         "in": {"$mergeObjects": ["$$filteredItem", {"patientId": "$patientId"}]}
-#                     }
-#                 },
-#                 # Filter and map over kvisits to include the id in each item
-#                 "kvisits": {
-#                     "$map": {
-#                         "input": {
-#                             "$filter": {
-#                                 "input": "$kvisits",
-#                                 "as": "item",
-#                                 "cond": {
-#                                     "$and": [
-#                                         # Start date
-#                                         # Start date
-#                                         {"$gte": ["$$item.visitDate", start_date]},
-#                                         # End date
-#                                         {"$lte": ["$$item.visitDate", end_date]}
-#                                     ]
-#                                 }
-#                             }
-#                         },
-#                         "as": "filteredItem",
-#                         # Merge id into each item
-#                         "in": {"$mergeObjects": ["$$filteredItem", {"patientId": "$patientId"}]}
-#                     }
-#                 }
-#             }
-#         }
-#     ]
