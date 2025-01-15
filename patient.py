@@ -72,9 +72,11 @@ def patient_last_visit(db, body):
             return { "false": True, "message": "No Previous OPD Visits found"}
      
         payload = item["visits"][0]
+        patient = db.patients.find_one({'patientId': body['patientId']}, {'_id': 0, 'dateofbirth': 0})
+        payload['patient'] = patient
         payload['visitDate']= payload['visitDate'].strftime('%Y-%m-%d')
         return { "success": True, "payload": payload}
-    except e as Exception:
+    except Exception as e:
         return { "success": False, "message": e}       
 
 def patient_history(db, body):
@@ -96,7 +98,7 @@ def patient_history(db, body):
         }
         
         return { "success": True, "payload": blank_hist}
-    except e as Exception:
+    except Exception as e:
         return { "success": False, "message": e}
 
 def get_next_id(db, id_type):

@@ -42,13 +42,22 @@ def get_report(db, body):
             'totalKarmaPayments': {'$sum': "$matchedKVisits.payment"},
             'totalVisits': {'$size': "$matchedVisits"},
             'totalKVisits': {'$size': "$matchedKVisits"},
+            'visitsList': { 
+                '$map': {
+                    'input': "$matchedVisits",
+                    'as': "visit",
+                    'in': {
+                        'patientId': "$patientId",  # Include patientId from the root document
+                        'opdPayment': "$$visit.opdPayment",
+                    }
+                }
+            },
             'kvisitsList': {
                 '$map': {
                     'input': "$matchedKVisits",
                     'as': "kvisit",
                     'in': {
                         'patientId': "$patientId",  # Include patientId from the root document
-                        'visitDate': "$$kvisit.visitDate",
                         'payment': "$$kvisit.payment",
                         'karms': "$$kvisit.karms"
                     }
@@ -62,6 +71,7 @@ def get_report(db, body):
         "totalKarmaPayments": 0,
         "totalVisits": 0,
         "totalKVisits": 0,
+        "visitsList": [],  # Initialize the list of visits
         "kvisitsList": []  # Initialize the list of kvisits
     }
     
@@ -71,9 +81,18 @@ def get_report(db, body):
         total_sums["totalVisits"] += entry["totalVisits"]
         total_sums["totalKVisits"] += entry["totalKVisits"]
         if start_date == end_date:
-            total_sums["kvisitsList"].extend(entry["kvisitsList"])
+            total_sums["visitsList"].extend(entry["visitsList"])
+            total_sums["kvisitsList"].extend(entry["kvisitsList"]) 
+            
 
     if start_date == end_date: 
+        for item in total_sums["visitsList"]:
+            patient_id = item['patientId']
+            patient_details = db['patients'].find_one(
+                    {'patientId': patient_id}, 
+                    {'_id': 0, 'firstName': 1, 'lastName': 1})
+            item['firstName'] = patient_details.get('firstName')
+            item['lastName'] = patient_details.get('lastName')
         for item in total_sums["kvisitsList"]:
             patient_id = item['patientId']
             patient_details = db['patients'].find_one(
@@ -81,7 +100,6 @@ def get_report(db, body):
                     {'_id': 0, 'firstName': 1, 'lastName': 1})
             item['firstName'] = patient_details.get('firstName')
             item['lastName'] = patient_details.get('lastName')
-            item['visitDate'] = item['visitDate'].strftime('%Y-%m-%d')
 
     print(total_sums)
     result = { "success": True, "payload": total_sums }
