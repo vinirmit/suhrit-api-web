@@ -5,7 +5,7 @@ from datetime import datetime, date
 
 def get_db():
     from pymongo import MongoClient
-    return MongoClient('mongodb+srv://vin:Ww8tw2wutr02krWY@cluster0.sgu0rat.mongodb.net/')
+    return MongoClient('<uri>')
 
 
 def copy_counts(db, sdb):
