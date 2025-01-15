@@ -8,15 +8,26 @@ def calculate_age(born):
     return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
     
 def search_patient(db, body):
+    criteria = {}
+    if 'patientId' in body:
+        criteria['patientId'] = body['patientId']
+    if 'mobile' in body:
+        criteria['mobile'] = body['mobile']
+    if 'name' in body:
+        criteria['$or'] = [
+            {'firstName': {'$regex': body['name'], '$options': 'i'}},
+            {'lastName': {'$regex': body['name'], '$options': 'i'}}
+        ]
 
-    item = db.patients.find_one(body)
-    if item is not None and '_id' in item:
-        item['age']= calculate_age(item['dateofbirth'])
+    items = list(db.patients.find(criteria, {'_id': 0}))
+    for item in items:
+        item['age'] = calculate_age(item['dateofbirth'])
         item['dateofbirth'] = item['dateofbirth'].strftime('%Y-%m-%d')
-        del item['_id']
-        return { "success": True, "payload": item}
+    
+    if items:
+        return { "success": True, "payload": items }
     else:
-        return { "success": False, "message": "Patient Not Found"}
+        return { "success": False, "message": "Patient Not Found" }
         
 def register_patient(db, body):
 
@@ -106,4 +117,3 @@ def get_next_id(db, id_type):
     item['lastNumber'] = item['lastNumber'] + 1
     db.counts.find_one_and_replace({'_id': item['_id']}, item)
     return item['lastNumber']
-    
