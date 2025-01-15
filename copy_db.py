@@ -18,9 +18,9 @@ def copy_database(source_uri, source_db_name, target_uri, target_db_name):
     target_client.close()
 
 if __name__ == "__main__":
-    source_uri = "mongodb+srv://vin:Ww8tw2wutr02krWY@cluster0.sgu0rat.mongodb.net/"
+    source_uri = ""
     source_db_name = "suhrit-qa"
-    target_uri = "mongodb+srv://vin:Ww8tw2wutr02krWY@cluster0.sgu0rat.mongodb.net/"
+    target_uri = ""
     target_db_name = "suhrit-prod"
 
     copy_database(source_uri, source_db_name, target_uri, target_db_name)
